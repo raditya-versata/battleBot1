@@ -1,0 +1,4 @@
+html2text
+openai
+tiktoken
+pandas
