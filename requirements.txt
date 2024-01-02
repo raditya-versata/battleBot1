@@ -2,3 +2,6 @@ html2text
 openai
 tiktoken
 pandas
+langchain
+pymongo
+unstructured

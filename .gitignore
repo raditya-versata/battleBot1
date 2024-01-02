@@ -162,3 +162,5 @@ cython_debug/
 
 _input/
 _output/
+_process/
+config.json
