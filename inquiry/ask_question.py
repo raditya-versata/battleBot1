@@ -16,7 +16,7 @@ collection = client[db_name][collection_name]
 vector_search = MongoDBAtlasVectorSearch.from_connection_string(
    keys.mongo_uri(),
    db_name + "." + collection_name,
-   OpenAIEmbeddings(disallowed_special=()),
+   OpenAIEmbeddings(openai_api_key=keys.openai_key(),disallowed_special=()),
    index_name="article_md_idx"
 )
 
@@ -29,7 +29,7 @@ qa_retriever = vector_search.as_retriever(
 )
 from langchain.prompts import PromptTemplate
 prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
-
+fbi
 
 {context}
 
@@ -44,10 +44,11 @@ from langchain.chat_models import ChatOpenAI
 from langchain.llms import OpenAI
 
 
-qa = RetrievalQA.from_chain_type(llm=OpenAI(),chain_type="stuff", retriever=qa_retriever, return_source_documents=True, chain_type_kwargs={"prompt": PROMPT})
+qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=keys.openai_key()),chain_type="stuff", retriever=qa_retriever, return_source_documents=True,
+                                 chain_type_kwargs={"prompt": PROMPT})
 
 
-docs = qa({"query": "gpt-4 compute requirements"})
+docs = qa({"query": "The GROWMARK hosted DNN sites are having a critical issue where the Text/HTML sections on all of our websites are displaying errors suddenly this morning. Ex. https://www.example.com/. Can we get immediate assistance with this?"})
 
 
 print(docs["result"])
