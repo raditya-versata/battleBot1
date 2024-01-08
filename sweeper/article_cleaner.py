@@ -26,7 +26,7 @@ class article_cleaner:
         """
         # Load the JSON file
         print(f"converting article {article_path}")
-        with open(article_path, 'r') as file:
+        with open(article_path, 'r', encoding="utf8") as file:
             content = json.load(file)
 
         # Get HTML content
@@ -41,7 +41,7 @@ class article_cleaner:
         output_file_path = os.path.join(self.relative_path + self.output_dir, f'{file_name}.md')
 
         # Save the Markdown content
-        with open(output_file_path, 'w') as file:
+        with open(output_file_path, 'w', encoding="utf8") as file:
             file.write(md_content)
 
     # List of common navigational phrases to remove
@@ -50,7 +50,7 @@ class article_cleaner:
     def convert_to_plain_text(self):
         for filename in os.listdir(os.path.join(self.relative_path, self.input_dir)):
             if filename.endswith('.json'):
-                with open(os.path.join(self.relative_path, self.input_dir, filename)) as file:
+                with open(os.path.join(self.relative_path, self.input_dir, filename), encoding="utf8") as file:
                     data = json.load(file)
                     content = data.get('body', '')  # Fetching content from 'body' instead of 'content'
 
@@ -68,7 +68,7 @@ class article_cleaner:
                 txt_filename = os.path.splitext(filename)[0] + '.txt'
 
                 # Write converted content to new file in output directory
-                with open(os.path.join(self.relative_path, self.output_dir, txt_filename), 'w') as file:
+                with open(os.path.join(self.relative_path, self.output_dir, txt_filename), 'w', encoding="utf8") as file:
                     file.write(compressed_content)
 
 if __name__ == '__main__':
